@@ -43,13 +43,24 @@ const config = {
         test: /\.s?css$/,
         use: [
           'style-loader',
-          'css-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+            },
+          },
           'postcss-loader',
           {
             loader: 'sass-loader',
             options: { implementation: require('sass') },
           },
         ],
+      },
+      {
+        test: /\.pug$/,
+        use: {
+          loader: 'pug-loader',
+        },
       },
     ],
   },

@@ -4,7 +4,7 @@
 *.log
 
 # dist
-/dist
+dist
 
 # test
 coverage
