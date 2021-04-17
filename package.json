@@ -23,10 +23,11 @@
     "url": "git+https://github.com/GeorgianStan/vanilla-context-menu.git"
   },
   "keywords": [
-    "framework",
-    "typescript",
-    "scss",
-    "npm"
+    "javascript",
+    "context-menu",
+    "right-click menu",
+    "vanilla javascript",
+    "menu"
   ],
   "author": "Stan Georgian",
   "license": "MIT",
