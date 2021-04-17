@@ -1,5 +1,5 @@
 export default class VanillaContextMenu {
   constructor() {
-    console.log('This will be awesome');
+    console.log('This will be awesome ');
   }
 }
