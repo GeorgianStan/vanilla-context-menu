@@ -6,10 +6,33 @@
     <title>Demo library framework</title>
 
     <script src="../dist/vanilla-context-menu.js"></script>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+      main {
+        border: 2px solid blueviolet;
+        width: 500px;
+        height: 500px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        position: relative;
+      }
+    </style>
   </head>
   <body>
+    <main></main>
     <script>
-      new window.VanillaContextMenu();
+      new window.VanillaContextMenu({
+        scope: document.querySelector('main'),
+        menuItems: [{ label: 'Option 1' }, { label: 'Option 2' }],
+      });
     </script>
   </body>
 </html>

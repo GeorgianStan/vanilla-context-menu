@@ -1,0 +1,30 @@
+.context-menu {
+  font-family: 'Open Sans', sans-serif;
+  position: fixed;
+  z-index: 10000;
+  width: 150px;
+  background: #1b1a1a;
+  // transform: scale(0);
+  // transform-origin: top left;
+
+  &.visible {
+    transform: scale(1);
+    transition: transform 200ms ease-in-out;
+  }
+
+  hr {
+    margin: 2px 0px;
+    border-color: #555;
+  }
+
+  & > * {
+    padding: 8px 10px;
+    font-size: 15px;
+    color: #eee;
+    cursor: pointer;
+
+    &:hover {
+      background: #555;
+    }
+  }
+}
