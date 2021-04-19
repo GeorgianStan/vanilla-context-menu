@@ -237,9 +237,10 @@ export default class VanillaContextMenu {
    */
   off() {
     document.removeEventListener('click', this.#onDocumentClick);
+    this.#options.scope.oncontextmenu = null;
   }
 
-  updateOptions(configurableOptions: ConfigurableOptions) {
+  updateOptions(configurableOptions: Partial<ConfigurableOptions>) {
     // ? extend default options and bind the menu items inside the state for pug template
     Object.assign(this.#options, this.#defaultOptions);
     Object.assign(this.#options, configurableOptions);
