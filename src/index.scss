@@ -3,28 +3,55 @@
   position: fixed;
   z-index: 10000;
   width: 150px;
-  background: #1b1a1a;
-  // transform: scale(0);
-  // transform-origin: top left;
+  transform: scale(0);
+  transition-property: transform;
+  transition-timing-function: ease-in-out;
+
+  &--black-theme {
+    background: #1b1a1a;
+
+    hr {
+      background-color: #555;
+    }
+
+    & > *:not(hr) {
+      color: #eee;
+
+      &:hover {
+        background: #555;
+      }
+    }
+  }
+
+  &--white-theme {
+    background: #fff;
+
+    hr {
+      background-color: #e4e4e4;
+    }
+
+    & > *:not(hr) {
+      color: #262626;
+
+      &:hover {
+        background: #e4e4e4;
+      }
+    }
+  }
 
   &.visible {
     transform: scale(1);
-    transition: transform 200ms ease-in-out;
   }
 
   hr {
-    margin: 2px 0px;
-    border-color: #555;
+    margin: 2px 0;
+    height: 1px;
+    border: 0;
   }
 
-  & > * {
+  & > *:not(hr) {
     padding: 8px 10px;
     font-size: 15px;
-    color: #eee;
     cursor: pointer;
-
-    &:hover {
-      background: #555;
-    }
   }
 }

@@ -23,15 +23,42 @@
         top: 50%;
         transform: translate(-50%, -50%);
         position: relative;
+        background-color: #343434;
+      }
+
+      .my-context-menu {
+        width: 200px;
+        background: #1b1a1a;
+        color: blueviolet;
       }
     </style>
   </head>
   <body>
     <main></main>
     <script>
+      class Test {
+        #pr = 2;
+
+        constructor() {}
+        publicV = 22;
+        publicM = () => {
+          console.log('publicM', this.publicV, this.#pr);
+        };
+      }
+      const myInstance = new Test();
+
       new window.VanillaContextMenu({
         scope: document.querySelector('main'),
-        menuItems: [{ label: 'Option 1' }, { label: 'Option 2' }],
+        menuItems: [
+          {
+            label: 'Option 12 34123 123 123 1',
+            callback: () => {
+              console.log('HEHE');
+            },
+          },
+          'hr',
+          { label: 'Option 2', callback: myInstance.publicM },
+        ],
       });
     </script>
   </body>
