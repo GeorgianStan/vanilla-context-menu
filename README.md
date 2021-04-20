@@ -32,7 +32,7 @@ npm i vanilla-context-menu
 Then anywhere in your code.
 
 ```javascript
-import VanillaContextMenu from 'vanilla-context-menu-test';
+import VanillaContextMenu from 'vanilla-context-menu';
 ```
 
 ## How to use it
