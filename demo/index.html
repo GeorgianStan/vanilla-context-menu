@@ -3,13 +3,75 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Demo library framework</title>
+    <title>Vanilla Context Menu Demo</title>
 
     <script src="../dist/vanilla-context-menu.js"></script>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+      main {
+        border: 2px solid blueviolet;
+        width: 500px;
+        height: 500px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        position: relative;
+      }
+
+      .context-menu-orange-theme {
+        background: #d35400;
+      }
+      .context-menu-orange-theme hr {
+        background-color: #eee;
+      }
+
+      .context-menu-orange-theme > *:not(hr) {
+        color: #eee;
+      }
+      .context-menu-orange-theme > *:not(hr):hover {
+        background: #e67e22;
+      }
+
+      .custom-context-menu-cls {
+        width: 150px;
+        font-family: 'Roboto', sans-serif;
+      }
+    </style>
   </head>
   <body>
+    <main></main>
     <script>
-      new window.VanillaContextMenu();
+      function myFunction() {
+        console.log('called from myFunction');
+      }
+
+      const myContextMenu = new window.VanillaContextMenu({
+        scope: document.querySelector('main'),
+        menuItems: [
+          {
+            label: 'Option 1',
+            callback: () => {
+              console.log('Option 1 was clicked');
+            },
+          },
+          'hr',
+          {
+            label: 'Option 2',
+            callback: myFunction,
+            preventCloseOnClick: false,
+          },
+        ],
+        customThemeClass: 'context-menu-orange-theme',
+        customClass: 'custom-context-menu-cls',
+        preventCloseOnClick: true,
+      });
     </script>
   </body>
 </html>

@@ -1,0 +1,7 @@
+div(class=`${style['context-menu']}`) 
+    each item in menuItems
+        if item === 'hr'
+            hr
+        else 
+            div 
+                span=item.label
