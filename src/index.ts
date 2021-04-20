@@ -99,7 +99,7 @@ export default class VanillaContextMenu {
     return { normalizedX, normalizedY };
   };
 
-  #removeExistingContextMenu = () => {
+  #removeExistingContextMenu = (): void => {
     document.querySelector(`.${style['context-menu']}`)?.remove();
   };
 
@@ -108,14 +108,14 @@ export default class VanillaContextMenu {
     contextMenu: HTMLElement,
     outOfBoundsOnX: boolean,
     outOfBoundsOnY: boolean,
-  ) => {
+  ): void => {
     // ? transition duration
     contextMenu.style.transitionDuration = `${
       this.#options.transitionDuration
     }ms`;
 
     // ? set the transition origin based on it's position
-    let transformOrigin: [string, string] = Array.from(
+    const transformOrigin: [string, string] = Array.from(
       this.#options.transformOrigin,
     ) as [string, string];
 
@@ -137,7 +137,7 @@ export default class VanillaContextMenu {
       contextMenu.classList.add(this.#options.customClass);
   };
 
-  #bindCallbacks = (contextMenu: HTMLElement) => {
+  #bindCallbacks = (contextMenu: HTMLElement): void => {
     this.#options.menuItems.forEach((menuItem: MenuItem, index: number) => {
       if (menuItem === 'hr') {
         return;
@@ -162,7 +162,7 @@ export default class VanillaContextMenu {
   };
 
   // *
-  #onShowContextMenu = (event: MouseEvent) => {
+  #onShowContextMenu = (event: MouseEvent): void => {
     event.preventDefault();
 
     // ? the current context menu should disappear when a new one is displayed
@@ -207,7 +207,7 @@ export default class VanillaContextMenu {
    * * Used to determine if the user has clicked outside of the context menu and if so to close it
    * @param event
    */
-  #onDocumentClick = (event: MouseEvent) => {
+  #onDocumentClick = (event: MouseEvent): void => {
     const clickedTarget: HTMLElement = event.target as HTMLElement;
 
     if (clickedTarget.closest(`.${style['context-menu']}`)) {
@@ -235,12 +235,12 @@ export default class VanillaContextMenu {
   /**
    * * Remove all the event listeners that were registered for this feature
    */
-  off() {
+  off(): void {
     document.removeEventListener('click', this.#onDocumentClick);
     this.#options.scope.oncontextmenu = null;
   }
 
-  updateOptions(configurableOptions: Partial<ConfigurableOptions>) {
+  updateOptions(configurableOptions: Partial<ConfigurableOptions>): void {
     // ? extend default options and bind the menu items inside the state for pug template
     Object.assign(this.#options, this.#defaultOptions);
     Object.assign(this.#options, configurableOptions);
