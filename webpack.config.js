@@ -71,9 +71,9 @@ const config = {
 
 module.exports = (env, argv) => {
   if (argv.mode === 'development') {
-    // * add some development rules here
+    // add some development rules here
   } else if (argv.mode === 'production') {
-    // * add some prod rules here
+    // add some prod rules here
   } else {
     throw new Error('Specify env');
   }

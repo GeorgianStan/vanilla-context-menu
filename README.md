@@ -44,7 +44,7 @@ new VanillaContextMenu({
     {
       label: 'Copy',
       callback: () => {
-        // ? your code here
+        // your code here
       },
     },
     'hr',
@@ -123,7 +123,7 @@ updateOptions(configurableOptions: Partial<ConfigurableOptions>): void
     background-color: #eee;
   }
 
-  // ? text color for each item
+  // text color for each item
   & > *:not(hr) {
     color: #eee;
 
