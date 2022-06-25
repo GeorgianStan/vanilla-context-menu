@@ -1,6 +1,6 @@
 {
   "name": "vanilla-context-menu",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Easily create context menus using vanilla JavaScript and integrate them in any web application",
   "main": "./dist/vanilla-context-menu.js",
   "types": "./dist/index.d.ts",
