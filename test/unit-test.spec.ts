@@ -1,5 +1,5 @@
 describe('Demo test', () => {
-  it('Should detect prime numbers', () => {
+  it('Should be true', () => {
     expect(true).toBeTruthy();
   });
 });
