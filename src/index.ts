@@ -22,6 +22,8 @@ interface State {
 
 export default class VanillaContextMenu {
   // private vars
+  #initialContextMenuEvent: MouseEvent | undefined;
+
   #state: State = { style, menuItems: [] }; // state for pug template
 
   #coreOptions: CoreOptions = {
@@ -143,7 +145,7 @@ export default class VanillaContextMenu {
       const htmlEl: HTMLElement = contextMenu.children[index] as HTMLElement;
 
       htmlEl.onclick = () => {
-        menuItem.callback();
+        menuItem.callback(this.#initialContextMenuEvent);
 
         // global value for all menu items, or the individual option or false
         const preventCloseOnClick: boolean =
@@ -160,6 +162,10 @@ export default class VanillaContextMenu {
 
   #onShowContextMenu = (event: MouseEvent): void => {
     event.preventDefault();
+    event.stopPropagation();
+
+    // store event so it can be passed to callbakcs
+    this.#initialContextMenuEvent = event;
 
     // the current context menu should disappear when a new one is displayed
     this.#removeExistingContextMenu();
