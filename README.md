@@ -6,7 +6,6 @@
     <img src='https://img.shields.io/github/stars/GeorgianStan/vanilla-context-menu' alt='stars'>
     <img src='https://img.shields.io/github/license/GeorgianStan/vanilla-context-menu' alt='license'>
     <img src='https://img.shields.io/github/package-json/v/GeorgianStan/vanilla-context-menu?color=%237146f9&logo=javascript' alt='version'>
-    <a href="https://david-dm.org/georgianstan/vanilla-context-menu" title="dependencies status"><img src="https://status.david-dm.org/gh/georgianstan/vanilla-context-menu.svg"/></a>
 </div>
 
 `vanilla-context-menu` - easily create context-menus using Vanilla JavaScript and integrate them in any web application
@@ -16,7 +15,7 @@
 ### Browser CDN
 
 ```html
-<script src="https://unpkg.com/vanilla-context-menu@1.0.0/dist/vanilla-context-menu.js"></script>
+<script src="https://unpkg.com/vanilla-context-menu@1.1.0/dist/vanilla-context-menu.js"></script>
 ```
 
 Where `@1.0.0` is the version that you want to use.
@@ -44,7 +43,7 @@ new VanillaContextMenu({
     {
       label: 'Copy',
       callback: () => {
-        // ? your code here
+        // your code here
       },
     },
     'hr',
@@ -84,7 +83,7 @@ type MenuItem = MenuOption | 'hr';
 | Option | Required | Type | Default | Description |
 |:-------------------:|:--------:|:---------:|:---------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
 | label | **yes** | string | undefined | Menu option label. |
-| callback | **yes** | () => any | undefined | Callback to be executed. |
+| callback | **yes** | (ev:MouseEvent) => any | undefined | Callback to be executed. The parameter `ev` is the MouseEvent that occurred when the `contextmenu` event was triggered |
 | preventCloseOnClick | no | boolean | false | If this variable is `true`, then the context menu will not close when this menu option is clicked. A value set for this option, either `true` or `false` will override the global one. |
 
 ## API <sub style='font-size:15px'>(2)</sub>
@@ -123,7 +122,7 @@ updateOptions(configurableOptions: Partial<ConfigurableOptions>): void
     background-color: #eee;
   }
 
-  // ? text color for each item
+  // text color for each item
   & > *:not(hr) {
     color: #eee;
 

@@ -1,6 +1,6 @@
-// ? core options are like default options, but they are not ment to be over written
+// core options are like default options, but they are not ment to be over written
 export interface CoreOptions {
-  transformOrigin: [string, string]; // ? ex top left
+  transformOrigin: [string, string]; // ex top left
 }
 export interface DefaultOptions {
   transitionDuration: number;
@@ -12,15 +12,15 @@ export interface ConfigurableOptions extends Partial<DefaultOptions> {
   menuItems: MenuItem[];
   customClass?: string;
   customThemeClass?: string;
-  preventCloseOnClick?: boolean; // ? default will be false - global value for all menu items
+  preventCloseOnClick?: boolean; // default will be false - global value for all menu items
 }
 
 export interface Options extends ConfigurableOptions, CoreOptions {}
 
 export interface MenuOption {
   label: string;
-  callback: () => any;
-  preventCloseOnClick?: boolean; // ? default will be false - individual value for each item (it will over write the global value if any)
+  callback: (ev: MouseEvent) => any;
+  preventCloseOnClick?: boolean; // default will be false - individual value for each item (it will over write the global value if any)
 }
 
 export type MenuItem = MenuOption | 'hr';
