@@ -15,10 +15,10 @@
 ### Browser CDN
 
 ```html
-<script src="https://unpkg.com/vanilla-context-menu@1.1.0/dist/vanilla-context-menu.js"></script>
+<script src="https://unpkg.com/vanilla-context-menu@1.2.0/dist/vanilla-context-menu.js"></script>
 ```
 
-Where `@1.0.0` is the version that you want to use.
+Where `@1.2.0` is the version that you want to use.
 
 Then anywhere in your JavaScript code you can access the library with `window.VanillaContextMenu` or simply `VanillaContextMenu`.
 
@@ -50,6 +50,11 @@ new VanillaContextMenu({
     {
       label: 'Paste',
       callback: pasteFunction,
+    },
+    {
+      label: 'Cut',
+      callback: pasteFunction,
+      iconClass: 'fa fa-scissors', // this only works if you have FontAwesome icons
     },
   ],
 });
@@ -83,6 +88,7 @@ type MenuItem = MenuOption | 'hr';
 | Option | Required | Type | Default | Description |
 |:-------------------:|:--------:|:---------:|:---------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
 | label | **yes** | string | undefined | Menu option label. |
+| iconClass | no | string | undefined | This property can be used in order to display an optional icon. It presents the CSS classes that will be added for the <i> tag. |
 | callback | **yes** | (ev:MouseEvent) => any | undefined | Callback to be executed. The parameter `ev` is the MouseEvent that occurred when the `contextmenu` event was triggered |
 | preventCloseOnClick | no | boolean | false | If this variable is `true`, then the context menu will not close when this menu option is clicked. A value set for this option, either `true` or `false` will override the global one. |
 
@@ -151,11 +157,34 @@ const myContextMenu = new window.VanillaContextMenu({
 });
 ```
 
+### Add icons for your menu itmes
+
+Firstly you need to add an icon library inside your application and then you can use the `iconClass` property to specify the CSS classes that will be added for the <i> tag.
+
+The following example will add a FontAwesome scissors icon near the menu option **Cut**.
+
+```javascript
+new VanillaContextMenu({
+  scope: document.querySelector('main'),
+  menuItems: [
+    {
+      label: 'Cut',
+      callback: pasteFunction,
+      iconClass: 'fa fa-scissors', // this only works if you have FontAwesome icons
+    },
+  ],
+});
+```
+
 You can check the `demo` file for more examples from [demo/index.html](https://github.com/GeorgianStan/vanilla-context-menu/blob/master/demo/index.html).
 
 ## Contributing
 
 Pull requests and stars are always welcome. Please check the [guidelines](https://github.com/GeorgianStan/vanilla-context-menu/blob/master/CONTRIBUTING.md).
+
+## Changelog
+
+Pull requests and stars are always welcome. Please check the [guidelines](https://github.com/GeorgianStan/vanilla-context-menu/blob/master/CHANGELOG.md).
 
 ## Stay in touch
 

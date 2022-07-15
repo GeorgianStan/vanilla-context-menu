@@ -4,8 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vanilla Context Menu Demo</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
 
-    <script src="../dist/vanilla-context-menu.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+
     <style>
       html,
       body {
@@ -44,9 +52,12 @@
         font-family: 'Roboto', sans-serif;
       }
     </style>
+
+    <script src="../dist/vanilla-context-menu.js"></script>
   </head>
   <body>
     <main></main>
+
     <script>
       function myFunction() {
         console.log('called from myFunction');
@@ -66,7 +77,9 @@
             label: 'Option 2',
             callback: myFunction,
             preventCloseOnClick: false,
+            iconClass: 'fa fa-scissors',
           },
+          { label: 'Option 3', iconClass: 'glyphicon glyphicon-cloud' },
         ],
         customThemeClass: 'context-menu-orange-theme',
         customClass: 'custom-context-menu-cls',
