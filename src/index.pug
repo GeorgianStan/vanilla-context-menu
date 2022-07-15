@@ -4,4 +4,6 @@ div(class=`${style['context-menu']}`)
             hr
         else 
             div 
+                if item.iconClass
+                    i(class=`${item.iconClass}`)
                 span=item.label

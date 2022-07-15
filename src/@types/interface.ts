@@ -20,6 +20,7 @@ export interface Options extends ConfigurableOptions, CoreOptions {}
 export interface MenuOption {
   label: string;
   callback: (ev: MouseEvent) => any;
+  iconClass: string;
   preventCloseOnClick?: boolean; // default will be false - individual value for each item (it will over write the global value if any)
 }
 
