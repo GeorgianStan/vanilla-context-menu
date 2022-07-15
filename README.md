@@ -15,10 +15,10 @@
 ### Browser CDN
 
 ```html
-<script src="https://unpkg.com/vanilla-context-menu@1.2.1/dist/vanilla-context-menu.js"></script>
+<script src="https://unpkg.com/vanilla-context-menu@1.2.2/dist/vanilla-context-menu.js"></script>
 ```
 
-Where `@1.2.1` is the version that you want to use.
+Where `@1.2.2` is the version that you want to use.
 
 Then anywhere in your JavaScript code you can access the library with `window.VanillaContextMenu` or simply `VanillaContextMenu`.
 
@@ -184,7 +184,7 @@ Pull requests and stars are always welcome. Please check the [guidelines](https:
 
 ## Changelog
 
-Pull requests and stars are always welcome. Please check the [guidelines](https://github.com/GeorgianStan/vanilla-context-menu/blob/master/CHANGELOG.md).
+For project updates you can also reference the [changelog](https://github.com/GeorgianStan/vanilla-context-menu/blob/master/CHANGELOG.md).
 
 ## Stay in touch
 
