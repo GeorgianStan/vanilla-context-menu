@@ -14,6 +14,10 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     />
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+
     <style>
       html,
       body {
@@ -77,9 +81,13 @@
             label: 'Option 2',
             callback: myFunction,
             preventCloseOnClick: false,
+            // Font Awesome Icon
             iconClass: 'fa fa-scissors',
           },
+          // Bootstrap Icon
           { label: 'Option 3', iconClass: 'glyphicon glyphicon-cloud' },
+          // Google Material Icon
+          { label: 'Option 4', iconHTML: `<span class="material-icons">face</span>` },
         ],
         customThemeClass: 'context-menu-orange-theme',
         customClass: 'custom-context-menu-cls',
