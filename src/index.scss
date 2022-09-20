@@ -55,9 +55,17 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+    gap: 5px;
+  }
 
-    i {
-      margin-right: 5px;
+  .menu-item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    & > * {
+      margin: 0;
+      padding: 0;
+      font-size: 16px;
     }
   }
 }
