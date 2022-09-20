@@ -67,12 +67,18 @@ const config = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
+
 };
 
 module.exports = (env, argv) => {
   if (argv.mode === 'development') {
     // add some development rules here
   } else if (argv.mode === 'production') {
+    config.performance = {
+      maxAssetSize: 50000,
+      maxEntrypointSize: 50000,
+      hints: 'error',
+    };
     // add some prod rules here
   } else {
     throw new Error('Specify env');
