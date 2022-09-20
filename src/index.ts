@@ -1,4 +1,9 @@
 /**
+ * * Dependencies
+ */
+import {sanitize} from 'dompurify';
+
+/**
  * * Base & Template * Style
  */
 import style from './index.scss';
@@ -221,8 +226,6 @@ export default class VanillaContextMenu {
   constructor(configurableOptions: ConfigurableOptions) {
     this.updateOptions(configurableOptions);
 
-    this.#state.menuItems = this.#options.menuItems;
-
     // bind the required event listeners
     this.#options.scope.oncontextmenu = this.#onShowContextMenu;
 
@@ -230,7 +233,21 @@ export default class VanillaContextMenu {
     document.addEventListener('click', this.#onDocumentClick);
   }
 
-  // Public methods (API)
+  /**
+   * Sanitize the HTML content for menu icons
+   * @param menuItems
+   */
+  #sanitizeMenuIcons = (menuItems: MenuItem[]): MenuItem[] =>
+    menuItems.map((item) => {
+      typeof item === 'object' &&
+        item.hasOwnProperty('iconHTML') &&
+        // TODO replace DOMPurify with Sanitize API when it will be supported https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API
+        (item.iconHTML = sanitize(item.iconHTML));
+
+      return item;
+    });
+
+    // Public methods (API)
 
   /**
    * Remove all the event listeners that were registered for this feature
@@ -241,9 +258,16 @@ export default class VanillaContextMenu {
   }
 
   updateOptions(configurableOptions: Partial<ConfigurableOptions>): void {
+    const sanitizedMenuItems = this.#sanitizeMenuIcons(
+      configurableOptions.menuItems,
+    );
+
     // extend default options and bind the menu items inside the state for pug template
     Object.assign(this.#options, this.#defaultOptions);
-    Object.assign(this.#options, configurableOptions);
+    Object.assign(this.#options, {
+      ...configurableOptions,
+      menuItems: sanitizedMenuItems,
+    });
     Object.assign(this.#options, this.#coreOptions);
 
     this.#state.menuItems = this.#options.menuItems;
