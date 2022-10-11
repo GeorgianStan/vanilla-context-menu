@@ -46,7 +46,6 @@
     "babel-loader": "^8.2.5",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.1",
-    "cypress": "^10.9.0",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
