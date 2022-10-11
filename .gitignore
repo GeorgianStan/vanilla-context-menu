@@ -17,4 +17,5 @@ coverage
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+workspace.code-workspace
 
