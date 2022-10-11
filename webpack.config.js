@@ -49,7 +49,6 @@ const config = {
               modules: true,
             },
           },
-          'postcss-loader',
           {
             loader: 'sass-loader',
             options: { implementation: require('sass') },
