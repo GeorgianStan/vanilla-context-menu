@@ -38,6 +38,7 @@
   "homepage": "https://github.com/GeorgianStan/vanilla-context-menu#readme",
   "devDependencies": {
     "@babel/core": "^7.13.15",
+    "@types/dompurify": "^2.3.4",
     "@types/jest": "^26.0.22",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
@@ -64,5 +65,8 @@
     "typescript": "^4.2.4",
     "webpack": "^5.33.2",
     "webpack-cli": "^4.6.0"
+  },
+  "dependencies": {
+    "dompurify": "^2.4.0"
   }
 }
