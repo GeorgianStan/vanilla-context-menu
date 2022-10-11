@@ -1,8 +1,7 @@
 /**
  * * Dependencies
  */
-import {sanitize} from 'dompurify';
-
+import { sanitize } from 'dompurify';
 /**
  * * Base & Template * Style
  */
@@ -21,7 +20,7 @@ import {
 } from './@types/interface';
 
 interface State {
-  style: any;
+  style: Partial<CSSStyleDeclaration>;
   menuItems: MenuItem[];
 }
 
@@ -67,15 +66,13 @@ export default class VanillaContextMenu {
   #normalizePozition = (
     mouseX: number,
     mouseY: number,
-    contextMenu: HTMLElement,
+    contextMenu: HTMLElement
   ): { normalizedX: number; normalizedY: number } => {
-    const scope: HTMLElement = this.#options.scope;
+    const { scope } = this.#options;
 
     // compute what is the mouse position relative to the container element (scope)
-    const {
-      left: scopeOffsetX,
-      top: scopeOffsetY,
-    } = scope.getBoundingClientRect();
+    const { left: scopeOffsetX, top: scopeOffsetY } =
+      scope.getBoundingClientRect();
 
     const scopeX: number = mouseX - scopeOffsetX;
     const scopeY: number = mouseY - scopeOffsetY;
@@ -111,7 +108,7 @@ export default class VanillaContextMenu {
   #applyStyleOnContextMenu = (
     contextMenu: HTMLElement,
     outOfBoundsOnX: boolean,
-    outOfBoundsOnY: boolean,
+    outOfBoundsOnY: boolean
   ): void => {
     // transition duration
     contextMenu.style.transitionDuration = `${
@@ -120,7 +117,7 @@ export default class VanillaContextMenu {
 
     // set the transition origin based on it's position
     const transformOrigin: [string, string] = Array.from(
-      this.#options.transformOrigin,
+      this.#options.transformOrigin
     ) as [string, string];
 
     outOfBoundsOnX && (transformOrigin[1] = 'right');
@@ -133,7 +130,7 @@ export default class VanillaContextMenu {
       contextMenu.classList.add(this.#options.customThemeClass);
     } else {
       contextMenu.classList.add(
-        style[`context-menu--${this.#options.theme}-theme`],
+        style[`context-menu--${this.#options.theme}-theme`]
       );
     }
 
@@ -185,7 +182,7 @@ export default class VanillaContextMenu {
     const { normalizedX, normalizedY } = this.#normalizePozition(
       mouseX,
       mouseY,
-      contextMenu,
+      contextMenu
     );
 
     contextMenu.style.top = `${normalizedY}px`;
@@ -195,7 +192,7 @@ export default class VanillaContextMenu {
     this.#applyStyleOnContextMenu(
       contextMenu,
       mouseX !== normalizedX,
-      mouseY !== normalizedY,
+      mouseY !== normalizedY
     );
 
     // disable context menu for it
@@ -247,7 +244,7 @@ export default class VanillaContextMenu {
       return item;
     });
 
-    // Public methods (API)
+  // Public methods (API)
 
   /**
    * Remove all the event listeners that were registered for this feature
@@ -259,7 +256,7 @@ export default class VanillaContextMenu {
 
   updateOptions(configurableOptions: Partial<ConfigurableOptions>): void {
     const sanitizedMenuItems = this.#sanitizeMenuIcons(
-      configurableOptions.menuItems,
+      configurableOptions.menuItems
     );
 
     // extend default options and bind the menu items inside the state for pug template

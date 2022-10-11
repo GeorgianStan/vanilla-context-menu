@@ -1,0 +1,37 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "ignorePatterns": ["test/**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": "tsconfig.json",
+        "sourceType": "module"
+      },
+      "plugins": ["@typescript-eslint/eslint-plugin"],
+      "extends": [
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+      ],
+      "env": {
+        "node": true,
+        "jest": true
+      },
+      "rules": {
+        "@typescript-eslint/ban-ts-comment": "off",
+        "max-lines": ["error", 500],
+        "max-params": ["error", 3],
+        "max-lines-per-function": ["error", 75],
+        "no-else-return": ["error", { "allowElseIf": false }],
+        "no-var": 2,
+        "prefer-arrow-callback": 2,
+        "prefer-const": 2,
+        "prefer-destructuring": 2,
+        "no-invalid-this": 2,
+        "no-loop-func": 2,
+        "arrow-body-style": 2
+      }
+    }
+  ]
+}
