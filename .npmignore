@@ -10,7 +10,6 @@ postcss.config.js
 
 # files
 *.log
-cypress.json
 *.code-workspace
 
 # tests
