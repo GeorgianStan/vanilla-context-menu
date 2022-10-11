@@ -1,13 +1,15 @@
 # dependencies
 /node_modules
 
-*.log
-
 # dist
 /dist
 
 # test
 coverage
+
+# Miscellaneous
+.eslintcache
+*.log
 
 # IDE - VSCode
 .vscode
