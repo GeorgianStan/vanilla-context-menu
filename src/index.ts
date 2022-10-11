@@ -1,16 +1,11 @@
-/**
- * * Dependencies
- */
+// Dependencies
 import { sanitize } from 'dompurify';
-/**
- * * Base & Template * Style
- */
+
+// Base & Template * Style
 import style from './index.scss';
 import template from './index.pug';
 
-/**
- * * Types
- */
+// Types
 import {
   CoreOptions,
   DefaultOptions,
