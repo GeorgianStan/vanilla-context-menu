@@ -4,9 +4,11 @@ div(class=`${style['context-menu']}`)
             hr
         else 
             div 
-                span(class=`${style['menu-item-icon']}`)
-                    if item.iconClass
-                        i(class=`${item.iconClass}`)
-                    if item.iconHTML
-                        != item.iconHTML
+                - var hasClass = item.iconClass || item.iconHTML
+                if hasClass
+                    span(class=`${style['menu-item-icon']}`)
+                        if item.iconClass
+                            i(class=`${item.iconClass}`)
+                        if item.iconHTML
+                            != item.iconHTML
                 span=item.label
