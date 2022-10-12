@@ -12,3 +12,6 @@ div(class=`${style['context-menu']}`)
                         if item.iconHTML
                             != item.iconHTML
                 span=item.label
+
+                if item.nestedMenu
+                    span(class=`${style['nested-menu-arrow']}`) &#x203A;

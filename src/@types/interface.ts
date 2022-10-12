@@ -26,6 +26,7 @@ export interface MenuOption {
   iconClass?: string;
   iconHTML?: string;
   preventCloseOnClick?: boolean; // default will be false - individual value for each item (it will override the global value if any)
+  nestedMenu?: MenuItem[];
 }
 
 export type MenuItem = MenuOption | 'hr';
