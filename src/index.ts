@@ -135,7 +135,7 @@ export default class VanillaContextMenu {
 
   #bindCallbacks = (contextMenu: HTMLElement): void => {
     this.#options.menuItems.forEach((menuItem: MenuItem, index: number) => {
-      if (menuItem === 'hr') {
+      if (menuItem === 'hr' || !menuItem.callback) {
         return;
       }
 

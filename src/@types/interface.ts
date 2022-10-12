@@ -19,7 +19,7 @@ export interface Options extends ConfigurableOptions, CoreOptions {}
 
 export interface MenuOption {
   label: string;
-  callback: (ev: MouseEvent) => unknown;
+  callback?: (ev: MouseEvent) => unknown;
   /**
    * @deprecated This property was replaced by the new iconHTML property
    */
