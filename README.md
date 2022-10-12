@@ -91,7 +91,7 @@ type MenuItem = MenuOption | 'hr';
 | label | **yes** | string | undefined | Menu option label. |
 | iconClass | no | string | undefined | This property can be used to display an optional icon. It presents the CSS classes that will be added for the `<i></i>` tag. |
 | iconHTML | no | string | undefined | This property can be used to display an optional icon. It presents an HTML string that will be sanitized internally using [DOMPurify](https://www.npmjs.com/package/dompurify). |
-| callback | **yes** | (ev:MouseEvent) => any | undefined | Callback to be executed. The parameter `ev` is the MouseEvent that occurred when the `contextmenu` event was triggered |
+| callback | no | (ev:MouseEvent) => any | undefined | Callback to be executed. The parameter `ev` is the MouseEvent that occurred when the `contextmenu` event was triggered |
 | preventCloseOnClick | no | boolean | false | If this variable is `true`, then the context menu will not close when this menu option is clicked. A value set for this option, either `true` or `false` will override the global one. |
 
 ## API <sub style='font-size:15px'>(2)</sub>
