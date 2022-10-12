@@ -14,9 +14,10 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     />
 
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
 
     <style>
       html,
@@ -87,7 +88,21 @@
           // Bootstrap Icon
           { label: 'Option 3', iconClass: 'glyphicon glyphicon-cloud' },
           // Google Material Icon
-          { label: 'Option 4', iconHTML: `<span class="material-icons">face</span>` },
+          {
+            label: 'Option 4',
+            iconHTML: `<span class="material-icons">face</span>`,
+          },
+          {
+            label: 'Nested Menu',
+            nestedMenu: [
+              {
+                label: 'Nested option',
+                callback: () => {
+                  console.log('Nested option was clicked');
+                },
+              },
+            ],
+          },
         ],
         customThemeClass: 'context-menu-orange-theme',
         customClass: 'custom-context-menu-cls',
