@@ -5,6 +5,9 @@ import { sanitize } from 'dompurify';
 import style from './index.scss';
 import template from './index.pug';
 
+// Utils
+import { normalizePozition } from './util.functions';
+
 // Types
 import {
   CoreOptions,
@@ -50,50 +53,6 @@ export default class VanillaContextMenu {
     const contextMenu: HTMLElement = wrapper.children[0] as HTMLElement;
 
     return contextMenu;
-  };
-
-  /**
-   * Normalize the context menu position so that it won't get out of bounds
-   * @param mouseX
-   * @param mouseY
-   * @param contextMenu
-   */
-  #normalizePozition = (
-    mouseX: number,
-    mouseY: number,
-    contextMenu: HTMLElement
-  ): { normalizedX: number; normalizedY: number } => {
-    const { scope } = this.#options;
-
-    // compute what is the mouse position relative to the container element (scope)
-    const { left: scopeOffsetX, top: scopeOffsetY } =
-      scope.getBoundingClientRect();
-
-    const scopeX: number = mouseX - scopeOffsetX;
-    const scopeY: number = mouseY - scopeOffsetY;
-
-    // check if the element will go out of bounds
-    const outOfBoundsOnX: boolean =
-      scopeX + contextMenu.clientWidth > scope.clientWidth;
-
-    const outOfBoundsOnY: boolean =
-      scopeY + contextMenu.clientHeight > scope.clientHeight;
-
-    let normalizedX: number = mouseX;
-    let normalizedY: number = mouseY;
-
-    // normalzie on X
-    if (outOfBoundsOnX) {
-      normalizedX = scopeOffsetX + scope.clientWidth - contextMenu.clientWidth;
-    }
-
-    // normalize on Y
-    if (outOfBoundsOnY) {
-      normalizedY =
-        scopeOffsetY + scope.clientHeight - contextMenu.clientHeight;
-    }
-
-    return { normalizedX, normalizedY };
   };
 
   #removeExistingContextMenu = (): void => {
@@ -174,10 +133,10 @@ export default class VanillaContextMenu {
     // set the position
     const { clientX: mouseX, clientY: mouseY } = event;
 
-    const { normalizedX, normalizedY } = this.#normalizePozition(
-      mouseX,
-      mouseY,
-      contextMenu
+    const { normalizedX, normalizedY } = normalizePozition(
+      { x: mouseX, y: mouseY },
+      contextMenu,
+      this.#options.scope
     );
 
     contextMenu.style.top = `${normalizedY}px`;
