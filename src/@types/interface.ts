@@ -17,7 +17,7 @@ export interface ConfigurableOptions extends Partial<DefaultOptions> {
 
 export interface Options extends ConfigurableOptions, CoreOptions {}
 
-export interface MenuOption {
+export interface BaseMenuOption {
   label: string;
   callback?: (ev: MouseEvent) => unknown;
   /**
@@ -26,7 +26,11 @@ export interface MenuOption {
   iconClass?: string;
   iconHTML?: string;
   preventCloseOnClick?: boolean; // default will be false - individual value for each item (it will override the global value if any)
-  nestedMenu?: MenuItem[];
+}
+
+export interface MenuOption extends BaseMenuOption {
+  nestedMenu?: NestedMenuItem[];
 }
 
 export type MenuItem = MenuOption | 'hr';
+export type NestedMenuItem = BaseMenuOption | 'hr';
