@@ -29,4 +29,16 @@ export interface MenuOption {
   nestedMenu?: MenuItem[];
 }
 
+export interface NestedMenuOption {
+  label: string;
+  callback?: (ev: MouseEvent) => unknown;
+  /**
+   * @deprecated This property was replaced by the new iconHTML property
+   */
+  iconClass?: string;
+  iconHTML?: string;
+  preventCloseOnClick?: boolean; // default will be false - individual value for each item (it will override the global value if any)
+}
+
 export type MenuItem = MenuOption | 'hr';
+export type NestedMenuItem = NestedMenuOption | 'hr';
