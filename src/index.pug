@@ -3,7 +3,7 @@ div(class=`${style['context-menu']}`)
         if item === 'hr'
             hr
         else 
-            div 
+            div(id=`context-menu-item-${item._id}`) 
                 - var hasClass = item.iconClass || item.iconHTML
                 if hasClass
                     span(class=`${style['menu-item-icon']}`)
