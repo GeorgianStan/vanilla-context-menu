@@ -206,6 +206,9 @@ class NestedContextMenu extends BaseContextMenu {
 
     document.querySelector('body').append(contextMenu);
 
+    // apply the css configurable style
+    this.applyStyleOnContextMenu(contextMenu, false, false);
+
     // set the position
     const { x: parentX, y: parentY } = parentEl.getBoundingClientRect();
 
@@ -220,9 +223,6 @@ class NestedContextMenu extends BaseContextMenu {
 
     contextMenu.style.top = `${normalizedY}px`;
     contextMenu.style.left = `${normalizedX}px`;
-
-    // apply the css configurable style
-    this.applyStyleOnContextMenu(contextMenu, false, false);
 
     // disable context menu for it
     contextMenu.oncontextmenu = (e) => e.preventDefault();
