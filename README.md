@@ -15,10 +15,10 @@
 ### Browser CDN
 
 ```html
-<script src="https://unpkg.com/vanilla-context-menu@1.3.0/dist/vanilla-context-menu.js"></script>
+<script src="https://unpkg.com/vanilla-context-menu@1.4.1/dist/vanilla-context-menu.js"></script>
 ```
 
-Where `@1.3.0` is the version that you want to use.
+Where `@1.4.1` is the version that you want to use.
 
 Then anywhere in your JavaScript code you can access the library with `window.VanillaContextMenu` or simply `VanillaContextMenu`.
 
@@ -159,7 +159,7 @@ updateOptions(configurableOptions: Partial<ConfigurableOptions>): void
 
 ```css
 .custom-context-menu-cls {
-  width: 150px;
+  width: 100px !important;
   font-family: 'Roboto', sans-serif; /* DEFAULT -- font-family: 'Open Sans', sans-serif; */
 }
 ```
