@@ -1,7 +1,6 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "ignorePatterns": ["test/**/*"],
   "overrides": [
     {
       "files": ["*.ts"],
@@ -15,8 +14,7 @@
         "plugin:@typescript-eslint/recommended"
       ],
       "env": {
-        "node": true,
-        "jest": true
+        "node": true
       },
       "rules": {
         "@typescript-eslint/ban-ts-comment": "off",

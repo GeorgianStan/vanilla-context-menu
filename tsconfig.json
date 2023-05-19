@@ -10,6 +10,5 @@
     "baseUrl": "./",
     "declaration": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["test/**/*"]
+  "include": ["src/**/*"]
 }

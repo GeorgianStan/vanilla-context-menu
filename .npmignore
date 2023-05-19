@@ -12,13 +12,7 @@ postcss.config.js
 *.log
 *.code-workspace
 
-# tests
-test
-jest.config.js
-setupJest.ts
-coverage
-
-#  lint
+# lint
 .eslintrc.js
 .prettierrc
 

@@ -21,7 +21,6 @@ Inside `demo` you will find a file `index.html` that can be used for local testi
 .
 ├── dist      // code output
 ├── src       // source code
-├── test      // test files
 ```
 
 ## Commit rules
