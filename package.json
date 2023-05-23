@@ -13,7 +13,7 @@
     "prepublishOnly": "webpack --mode=production",
     "lint": "eslint \"src/**/*.ts\"",
     "lint:fix": "eslint \"src/**/*.ts\" --fix",
-    "format": "prettier --write \"src/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.{ts,scss}\"",
     "prepare": "husky install"
   },
   "repository": {
@@ -45,8 +45,6 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.1",
     "eslint": "^8.25.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "node-sass": "^7.0.3",
@@ -65,7 +63,7 @@
     "dompurify": "^2.4.0"
   },
   "lint-staged": {
-    "*.{js,ts,json,scss,html}": "prettier --write",
-    "{!(*spec).ts,*.html}": "eslint --cache"
+    "*.{ts,scss}": "prettier --write",
+    "*.ts": "eslint --cache"
   }
 }
