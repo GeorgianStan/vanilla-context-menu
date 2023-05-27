@@ -8,6 +8,7 @@
 coverage
 
 # Miscellaneous
+playground
 .eslintcache
 *.log
 
@@ -20,4 +21,3 @@ coverage
 !.vscode/extensions.json
 .history/*
 workspace.code-workspace
-

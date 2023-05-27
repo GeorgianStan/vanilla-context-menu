@@ -1,8 +1,4 @@
 
-# source code
-src
-index.html
-
 # compiler
 tsconfig.json
 webpack.config.js

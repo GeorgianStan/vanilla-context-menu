@@ -1,87 +1,59 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+const isProduction = process.env.NODE_ENV == 'production';
+
+const stylesHandler = 'style-loader';
+
 const config = {
-  target: 'web',
-  entry: {
-    index: './src/index.ts',
-  },
+  entry: './src/index.ts',
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, 'dist'),
     filename: 'vanilla-context-menu.js',
-    libraryTarget: 'umd',
-    globalObject: 'this',
-    libraryExport: 'default',
-    umdNamedDefine: true,
-    library: 'VanillaContextMenu',
+    library: {
+      name: 'VanillaContextMenu',
+      type: 'umd',
+    },
   },
-  watchOptions: {
-    aggregateTimeout: 600,
-    ignored: /node_modules/,
+  devServer: {
+    open: true,
+    host: 'localhost',
+    port: 8080,
   },
   plugins: [
     new CleanWebpackPlugin({
       cleanStaleWebpackAssets: false,
-      cleanOnceBeforeBuildPatterns: [path.resolve(__dirname, './dist')],
     }),
   ],
+
   module: {
     rules: [
       {
-        test: /\.ts(x?)$/,
-        exclude: [/node_modules/, /test/],
-        use: [
-          {
-            loader: 'babel-loader',
-          },
-          {
-            loader: 'ts-loader',
-          },
-        ],
+        test: /\.(ts|tsx)$/i,
+        loader: 'ts-loader',
+        exclude: ['/node_modules/'],
       },
       {
-        test: /\.s?css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-            },
-          },
-          {
-            loader: 'sass-loader',
-            options: { implementation: require('sass') },
-          },
-        ],
-      },
-      {
-        test: /\.pug$/,
-        use: {
-          loader: 'pug-loader',
-        },
+        test: /\.s[ac]ss$/i,
+        use: [stylesHandler, 'css-loader', 'sass-loader'],
       },
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
-
 };
 
-module.exports = (env, argv) => {
-  if (argv.mode === 'development') {
-    // add some development rules here
-  } else if (argv.mode === 'production') {
+module.exports = () => {
+  if (isProduction) {
+    config.mode = 'production';
     config.performance = {
-      maxAssetSize: 50000,
-      maxEntrypointSize: 50000,
+      maxEntrypointSize: 10000,
       hints: 'error',
     };
-    // add some prod rules here
   } else {
-    throw new Error('Specify env');
+    config.mode = 'development';
+    config.devtool = 'source-map';
   }
-
   return config;
 };
