@@ -1,4 +1,5 @@
-body::before {
-  content: 'VanillaContextMenu WIP...';
+:host {
   display: block;
+  height: 5px;
+  background-color: orange;
 }

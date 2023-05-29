@@ -1,3 +1,13 @@
-import './index.scss';
+import style from './index.scss';
 
-console.log('WIP...');
+class VanillaContextMenu extends HTMLElement {
+  #shadow: ShadowRoot;
+
+  constructor() {
+    super();
+    this.#shadow = this.attachShadow({ mode: 'open' });
+    style.use({ target: this.#shadow });
+  }
+}
+
+customElements.define('vanilla-context-menu', VanillaContextMenu);
