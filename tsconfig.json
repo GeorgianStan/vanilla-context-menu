@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
+    "typeRoots": ["@types", "./node_modules/@types"],
     "module": "ES6",
     "target": "ES2022",
     "declaration": true,
     "declarationMap": true,
-    "outDir": "./dist",
-
+    "allowSyntheticDefaultImports":true,
+    "outDir": "./dist"
   },
   "include": ["src/**/*"]
 }

@@ -3,8 +3,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV == 'production';
 
-const stylesHandler = 'style-loader';
-
 const config = {
   entry: './src/index.ts',
   output: {
@@ -35,7 +33,21 @@ const config = {
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [stylesHandler, 'css-loader', 'sass-loader'],
+        use: [
+          {
+            loader: 'style-loader',
+            options: {
+              injectType: 'lazyStyleTag',
+              insert: function insertIntoTarget(element, options) {
+                var parent = options.target || document.head;
+
+                parent.appendChild(element);
+              },
+            },
+          },
+          'css-loader',
+          'sass-loader',
+        ],
       },
     ],
   },
