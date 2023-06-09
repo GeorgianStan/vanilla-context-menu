@@ -13,7 +13,7 @@ class Menu {
   #showMenu() {
     const options = this.#optionsContent.map((fragment) => {
       const option = document.createElement('span');
-      option.setAttribute(TOKENS.get('optionAttr'), '');
+      option.setAttribute(TOKENS.get('optionAttr') as string, '');
       option.append(fragment);
       return option;
     });

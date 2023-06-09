@@ -6,6 +6,8 @@
     "declaration": true,
     "declarationMap": true,
     "allowSyntheticDefaultImports":true,
+    "strictNullChecks":true,
+    "strictPropertyInitialization":true,
     "outDir": "./dist"
   },
   "include": ["src/**/*"]
