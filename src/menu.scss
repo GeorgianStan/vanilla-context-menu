@@ -1,16 +1,17 @@
-:host {
-  position: fixed;
-  z-index: 10000;
-  display: flex;
-  flex-direction: column;
-  animation: fadein 100ms;
-}
-
-@keyframes fadein {
-  from {
-    opacity: 0;
+@layer {
+  :host {
+    position: fixed;
+    z-index: 10000;
+    animation: fadein 100ms;
+    font-family: inherit;
   }
-  to {
-    opacity: 1;
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }

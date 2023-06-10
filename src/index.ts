@@ -1,11 +1,17 @@
 import menuSheet from './menu.scss';
 import { normalizePosition } from './util';
 
-type TOKEN_KEYS = 'triggerAttr' | 'menu-selector';
+type TOKEN_KEYS =
+  | 'trigger-attr'
+  | 'menu-selector'
+  | 'options-attr'
+  | 'style-attr';
 
 const TOKENS = new Map<TOKEN_KEYS, string>([
-  ['triggerAttr', 'vanilla-context-menu-trigger'], // Attribute selector used for context menu triggers.
-  ['menu-selector', 'vanilla-menu'],
+  ['trigger-attr', 'vanilla-context-menu-trigger'], // Attribute selector used for context menu triggers.
+  ['menu-selector', 'vanilla-menu'], // HTML tag for the element that will be created when the context menu event is triggered.
+  ['options-attr', 'options'], // The attribute selector for the wrapper in which the options are declared.
+  ['style-attr', 'style'], // The attribute selector for the wrapper in which the style tag is declared.
 ]);
 
 class Menu extends HTMLElement {
@@ -15,13 +21,12 @@ class Menu extends HTMLElement {
   // public properties
   id!: string;
 
-  set options(optionsContent: Node[]) {
-    const options = optionsContent.map((fragment) => {
-      const option = document.createElement('span');
-      option.append(fragment);
-      return option;
-    });
-    this.#shadow.append(...options);
+  set options(optionsContent: Node) {
+    this.#shadow.append(optionsContent);
+  }
+
+  set styleTag(styleContent: Node) {
+    this.#shadow.prepend(styleContent);
   }
 
   // life-cycle methods
@@ -53,19 +58,28 @@ class VanillaContextMenu extends HTMLElement {
     // Remove existing menu if any.
     this.#menu && this.#menu.remove();
 
-    // Get the options content and build a new menu.
-    const optionsContent = Array.from(this.querySelectorAll('template')).map(
-      (template) => template.content.cloneNode(true)
-    );
+    // Build the menu and pass the options and the style.
+    const optionsContent = (
+      this.querySelector(`[${TOKENS.get('options-attr')}]`) as
+        | HTMLTemplateElement
+        | undefined
+    )?.content.cloneNode(true);
 
-    // Create the menu and append the options.
+    const styleContent = (
+      this.querySelector(`[${TOKENS.get('style-attr')}]`) as
+        | HTMLTemplateElement
+        | undefined
+    )?.content.cloneNode(true);
+
     this.#menu = document.createElement(
       TOKENS.get('menu-selector') as string
     ) as Menu;
 
+    optionsContent && (this.#menu.options = optionsContent);
+    styleContent && (this.#menu.styleTag = styleContent);
+
     // The menu needs to be added to the DOM so that its position can be normalized according to its size.
     document.body.append(this.#menu);
-    this.#menu.options = optionsContent;
 
     // Compute the position of the menu so that it fits inside the viewport.
     const { clientX, clientY } = event;
@@ -101,7 +115,7 @@ class VanillaContextMenu extends HTMLElement {
     const parent = this.parentElement as HTMLElement;
 
     const triggers = Array.from(
-      parent.querySelectorAll(`[${TOKENS.get('triggerAttr')}]`)
+      parent.querySelectorAll(`[${TOKENS.get('trigger-attr')}]`)
     ) as HTMLElement[];
 
     return triggers.length ? triggers : [parent];

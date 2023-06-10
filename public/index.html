@@ -19,11 +19,13 @@
 
       body {
         display: flex;
-        gap: 15px;
+        gap: 1%;
+        font-family: 'Open Sans', sans-serif;
+        flex-wrap: wrap;
       }
 
       section {
-        flex: 1 1 0;
+        flex: 1 1 49%;
       }
 
       section:nth-child(1) {
@@ -32,6 +34,10 @@
 
       section:nth-child(2) {
         border: 2px solid orange;
+      }
+
+      section:nth-child(3) {
+        border: 2px solid purple;
       }
 
       button {
@@ -44,27 +50,71 @@
     </style>
   </head>
   <body>
-    <!-- Example one: inside a container wrapper -->
-
+    <!-- Example one: inside a container wrapper with internal style where the trigger is the parent element. -->
     <section>
+      <p>Right click anywhere in this rectangle.</p>
       <vanilla-context-menu>
-        <!-- The content of the template tags will be used to create the menu options. Here you can add your own style tag to style the menu. -->
-        <template> option one </template>
-        <template>option two </template>
+        <!-- Pass the menu style. -->
+        <template style>
+          <style>
+            :host {
+              background: #fff;
+              border: 2px solid #262626;
+            }
+            p {
+              color: #262626;
+              margin: 0;
+              padding: 2px;
+              cursor: pointer;
+            }
+
+            p:hover {
+              background-color: #e4e4e4;
+            }
+          </style>
+        </template>
+        <!-- Pass the options. -->
+        <template options>
+          <p>option one</p>
+          <p>option two</p>
+        </template>
       </vanilla-context-menu>
     </section>
 
-    <!-- Example two: inside a wrapper with multiple targets -->
-
+    <!-- Example two: inside a wrapper with multiple targets. -->
     <section>
+      <p>
+        <strong>contextmenu</strong> event is available only on the specified
+        targets.
+      </p>
+
       <vanilla-context-menu>
-        <template> option one </template>
-        <template>option two </template>
+        <template options>
+          <span> option one</span>
+          <br />
+          <span> option two</span>
+        </template>
       </vanilla-context-menu>
 
-      <button vanilla-context-menu-trigger>Button One</button>
+      <button vanilla-context-menu-trigger>Right click on me!</button>
       <br />
-      <button vanilla-context-menu-trigger>Button Two</button>
+      <button vanilla-context-menu-trigger>Right click on me too!</button>
+    </section>
+
+    <!-- Example three: external stylesheet -->
+    <section>
+      <p>Right click anywhere in this rectangle.</p>
+      <vanilla-context-menu>
+        <template style>
+          <link rel="stylesheet" href="./menu-custom-style.css" />
+        </template>
+        <template options>
+          <p>option one</p>
+          <p>option two</p>
+          <hr>
+          <p>option three</p>
+        </template>
+      </vanilla-context-menu>
     </section>
   </body>
 

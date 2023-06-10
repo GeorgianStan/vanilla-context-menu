@@ -1,0 +1,22 @@
+:host {
+  border: 1px solid #343434;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+:host p {
+  color: #343434;
+  padding: 5px;
+  cursor: pointer;
+  margin: 0;
+}
+
+:host p:hover {
+  background-color: #eee;
+}
+
+:host hr {
+  margin:  0;
+  height: 1px;
+  border: 0;
+  background-color: #ddd;
+}
