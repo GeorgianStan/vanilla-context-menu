@@ -35,17 +35,11 @@ const config = {
         test: /\.s[ac]ss$/i,
         use: [
           {
-            loader: 'style-loader',
+            loader: 'css-loader',
             options: {
-              injectType: 'lazyStyleTag',
-              insert: function insertIntoTarget(element, options) {
-                var parent = options.target || document.head;
-
-                parent.appendChild(element);
-              },
+              exportType: 'css-style-sheet',
             },
           },
-          'css-loader',
           'sass-loader',
         ],
       },

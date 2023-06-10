@@ -1,4 +1,4 @@
-import style from './index.scss';
+import sheet from './index.scss';
 
 const TOKENS = new Map<string, string>([
   ['optionAttr', 'vanilla-context-menu-option'],
@@ -89,7 +89,7 @@ class VanillaContextMenu extends HTMLElement {
     this.#menuTrigger = this.parentElement as HTMLElement;
 
     // Append the style tag using the style-loader's configuration defined in webpack.config.js.
-    style.use({ target: this.#shadow });
+    this.#shadow.adoptedStyleSheets = [sheet];
 
     // Set an unique id on this element.
     this.setAttribute('id', (this.#id = crypto.randomUUID()));
