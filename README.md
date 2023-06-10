@@ -34,11 +34,6 @@ Then anywhere in your code.
 import * as VanillaContextMenu from 'vanilla-context-menu';
 ```
 
-### Side-effects
-
-Importing the library will have side effects in your application:
-- It will create a `style` tag with the library's **isolated** CSS rules.
-
 ## Examples
 
 > You can check the `public` folder for more examples -- [public/index.html](https://github.com/GeorgianStan/vanilla-context-menu/blob/master/public/index.html).
