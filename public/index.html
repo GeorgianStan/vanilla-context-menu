@@ -3,9 +3,68 @@
   <head>
     <meta charset="utf-8" />
     <title>Vanilla Context Menu Demo</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        width: 100%;
+        height: 100%;
+        padding: 3px;
+        margin: 0;
+      }
+
+      body {
+        display: flex;
+        gap: 15px;
+      }
+
+      section {
+        flex: 1 1 0;
+      }
+
+      section:nth-child(1) {
+        border: 2px solid red;
+      }
+
+      section:nth-child(2) {
+        border: 2px solid orange;
+      }
+
+      button{
+        margin: 10px;
+        padding: 10px;
+        border: 2px solid #00b0ff;
+        background: transparent;
+        color: #00b0ff;
+      }
+    </style>
   </head>
   <body>
-    <vanilla-context-menu> </vanilla-context-menu>
+    <!-- Example one: inside a container wrapper -->
+
+    <section>
+      <vanilla-context-menu>
+        <template> option one </template>
+        <template>option two </template>
+      </vanilla-context-menu>
+    </section>
+
+    <!-- Example two: inside a wrapper with multiple targets -->
+
+    <section>
+      <vanilla-context-menu>
+        <template> option one </template>
+        <template>option two </template>
+      </vanilla-context-menu>
+
+      <button vanilla-context-menu-trigger>Button One</button>
+      <br>
+      <button vanilla-context-menu-trigger>Button Two</button>
+    </section>
   </body>
 
   <script src="vanilla-context-menu.js"></script>

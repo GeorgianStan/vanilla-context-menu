@@ -1,7 +1,10 @@
 import sheet from './index.scss';
 
-const TOKENS = new Map<string, string>([
-  ['optionAttr', 'vanilla-context-menu-option'],
+type TOKEN_KEYS = 'triggerAttr' | 'optionAttr';
+
+const TOKENS = new Map<TOKEN_KEYS, string>([
+  ['optionAttr', 'vanilla-context-menu-option'], // Attribute selector used for options.
+  ['triggerAttr', 'vanilla-context-menu-trigger'], // Attribute selector used for context menu triggers.
 ]);
 
 class Menu {
@@ -45,7 +48,7 @@ class VanillaContextMenu extends HTMLElement {
   #shadow: ShadowRoot;
 
   #menu: Menu | undefined;
-  #menuTrigger: HTMLElement;
+  #menuTriggers: HTMLElement[];
 
   // private methods
   #_onContextMenu(event: MouseEvent) {
@@ -81,12 +84,23 @@ class VanillaContextMenu extends HTMLElement {
     this.#menu && this.#menu.remove();
   };
 
+  /** Return an array of HTML elements that act as triggers and will open the menu when the contextmenu event is dispatched on them. */
+  get #triggers(): HTMLElement[] {
+    const parent = this.parentElement as HTMLElement;
+
+    const triggers = Array.from(
+      parent.querySelectorAll(`[${TOKENS.get('triggerAttr')}]`)
+    ) as HTMLElement[];
+
+    return triggers.length ? triggers : [parent];
+  }
+
   // life-cycle methods
   constructor() {
     super();
 
     this.#shadow = this.attachShadow({ mode: 'open' });
-    this.#menuTrigger = this.parentElement as HTMLElement;
+    this.#menuTriggers = this.#triggers;
 
     // Append the style tag using the style-loader's configuration defined in webpack.config.js.
     this.#shadow.adoptedStyleSheets = [sheet];
@@ -94,7 +108,9 @@ class VanillaContextMenu extends HTMLElement {
     // Set an unique id on this element.
     this.setAttribute('id', (this.#id = crypto.randomUUID()));
 
-    this.#menuTrigger.addEventListener('contextmenu', this.#onContextMenu);
+    this.#menuTriggers.forEach((trigger) =>
+      trigger.addEventListener('contextmenu', this.#onContextMenu)
+    );
 
     // Add a click event listener to create a modal effect for the menu and remove it if a click event is triggered outside of it.
     document.addEventListener('click', this.#onDocumentClick);
@@ -102,7 +118,9 @@ class VanillaContextMenu extends HTMLElement {
 
   disconnectedCallback() {
     // Cleanup login when the custom element is removed from the DOM.
-    this.#menuTrigger.removeEventListener('contextmenu', this.#onContextMenu);
+    this.#menuTriggers.forEach((trigger) =>
+      trigger.removeEventListener('contextmenu', this.#onContextMenu)
+    );
     document.removeEventListener('click', this.#onDocumentClick);
 
     this.#menu && this.#menu.remove();
