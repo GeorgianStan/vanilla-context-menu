@@ -1,52 +1,46 @@
-import sheet from './index.scss';
+import menuSheet from './menu.scss';
 
-type TOKEN_KEYS = 'triggerAttr' | 'optionAttr';
+type TOKEN_KEYS = 'triggerAttr' | 'menu-selector';
 
 const TOKENS = new Map<TOKEN_KEYS, string>([
-  ['optionAttr', 'vanilla-context-menu-option'], // Attribute selector used for options.
   ['triggerAttr', 'vanilla-context-menu-trigger'], // Attribute selector used for context menu triggers.
+  ['menu-selector', 'vanilla-menu'],
 ]);
 
-class Menu {
+class Menu extends HTMLElement {
   // private properties
   #shadow: ShadowRoot;
-  #optionsContent: Node[];
 
-  // private methods
-  #showMenu() {
-    const options = this.#optionsContent.map((fragment) => {
+  // public properties
+  id!: string;
+
+  set options(optionsContent: Node[]) {
+    const options = optionsContent.map((fragment) => {
       const option = document.createElement('span');
-      option.setAttribute(TOKENS.get('optionAttr') as string, '');
       option.append(fragment);
       return option;
     });
-
     this.#shadow.append(...options);
   }
 
   // life-cycle methods
-  constructor(shadowRoot: ShadowRoot, optionsContent: Node[]) {
-    this.#shadow = shadowRoot;
-    this.#optionsContent = optionsContent;
+  constructor() {
+    super();
 
-    this.#showMenu();
+    this.#shadow = this.attachShadow({ mode: 'open' });
+
+    // Append the style tag using the style-loader's configuration defined in webpack.config.js.
+    this.#shadow.adoptedStyleSheets = [menuSheet];
   }
 
-  // public methods
-
-  /** Removes the menu that was created from the template. */
-  remove() {
-    this.#shadow
-      .querySelectorAll(`[${TOKENS.get('optionAttr')}]`)
-      .forEach((el) => el.remove());
+  connectedCallback() {
+    // Set an unique id on this element.
+    this.setAttribute('id', (this.id = crypto.randomUUID()));
   }
 }
 
 class VanillaContextMenu extends HTMLElement {
   // private properties
-  #id: string;
-  #shadow: ShadowRoot;
-
   #menu: Menu | undefined;
   #menuTriggers: HTMLElement[];
 
@@ -58,16 +52,24 @@ class VanillaContextMenu extends HTMLElement {
     // Remove existing menu if any.
     this.#menu && this.#menu.remove();
 
-    // Set the position of the menu based on the mouse position.
-    const { clientX: mouseX, clientY: mouseY } = event;
-    this.style.top = `${mouseY}px`;
-    this.style.left = `${mouseX}px`;
-
     // Get the options content and build a new menu.
     const optionsContent = Array.from(this.querySelectorAll('template')).map(
       (template) => template.content.cloneNode(true)
     );
-    this.#menu = new Menu(this.#shadow, optionsContent);
+
+    // Create the menu.
+    this.#menu = document.createElement(
+      TOKENS.get('menu-selector') as string
+    ) as Menu;
+
+    this.#menu.options = optionsContent;
+
+    // Set the position of the menu based on the mouse position.
+    const { clientX: mouseX, clientY: mouseY } = event;
+    this.#menu.style.top = `${mouseY}px`;
+    this.#menu.style.left = `${mouseX}px`;
+
+    document.body.append(this.#menu);
   }
 
   // To remove and event listener, the same options that were send to 'addEventListener' functions must be send. Since 'bind' creates a new function, it's necessary to store the reference to this new function in a variable.
@@ -75,9 +77,13 @@ class VanillaContextMenu extends HTMLElement {
 
   /** Determine if a click event was triggered outside of the context menu and if so, remove it. */
   #onDocumentClick = (event: MouseEvent): void => {
+    if (!this.#menu) {
+      return;
+    }
+
     const clickedTarget = event.target as HTMLElement;
 
-    if (clickedTarget.closest(`[id='${this.#id}']`)) {
+    if (clickedTarget.closest(`[id='${this.#menu.id}']`)) {
       return;
     }
 
@@ -99,15 +105,9 @@ class VanillaContextMenu extends HTMLElement {
   constructor() {
     super();
 
-    this.#shadow = this.attachShadow({ mode: 'open' });
     this.#menuTriggers = this.#triggers;
 
-    // Append the style tag using the style-loader's configuration defined in webpack.config.js.
-    this.#shadow.adoptedStyleSheets = [sheet];
-
-    // Set an unique id on this element.
-    this.setAttribute('id', (this.#id = crypto.randomUUID()));
-
+    // Add click event on each menu trigger to open the contextmenu.
     this.#menuTriggers.forEach((trigger) =>
       trigger.addEventListener('contextmenu', this.#onContextMenu)
     );
@@ -127,4 +127,5 @@ class VanillaContextMenu extends HTMLElement {
   }
 }
 
+customElements.define(TOKENS.get('menu-selector') as string, Menu);
 customElements.define('vanilla-context-menu', VanillaContextMenu);
