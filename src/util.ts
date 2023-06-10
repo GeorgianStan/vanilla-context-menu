@@ -11,7 +11,10 @@ export function normalizePosition(
   target: HTMLElement
 ): { normalizedX: number; normalizedY: number } {
   const { clientX, clientY } = initialPosition;
-  const { clientWidth: targetWidth, clientHeight: targetHeight } = target;
+
+  const targetCompStyles = getComputedStyle(target);
+  const targetWidth = parseInt(targetCompStyles.getPropertyValue('width'));
+  const targetHeight = parseInt(targetCompStyles.getPropertyValue('height'));
 
   const { innerWidth: maxSizeOnX, innerHeight: maxSizeOnY } = window;
 
