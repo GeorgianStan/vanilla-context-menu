@@ -3,4 +3,14 @@
   z-index: 10000;
   display: flex;
   flex-direction: column;
+  animation: fadein 100ms;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
