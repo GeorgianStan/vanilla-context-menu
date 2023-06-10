@@ -1,4 +1,5 @@
 import menuSheet from './menu.scss';
+import { normalizePosition } from './util';
 
 type TOKEN_KEYS = 'triggerAttr' | 'menu-selector';
 
@@ -57,19 +58,24 @@ class VanillaContextMenu extends HTMLElement {
       (template) => template.content.cloneNode(true)
     );
 
-    // Create the menu.
+    // Create the menu and append the options.
     this.#menu = document.createElement(
       TOKENS.get('menu-selector') as string
     ) as Menu;
 
+    // The menu needs to be added to the DOM so that its position can be normalized according to its size.
+    document.body.append(this.#menu);
     this.#menu.options = optionsContent;
 
-    // Set the position of the menu based on the mouse position.
-    const { clientX: mouseX, clientY: mouseY } = event;
-    this.#menu.style.top = `${mouseY}px`;
-    this.#menu.style.left = `${mouseX}px`;
+    // Compute the position of the menu so that it fits inside the viewport.
+    const { clientX, clientY } = event;
+    const { normalizedX, normalizedY } = normalizePosition(
+      { clientX, clientY },
+      this.#menu
+    );
 
-    document.body.append(this.#menu);
+    this.#menu.style.top = `${normalizedY}px`;
+    this.#menu.style.left = `${normalizedX}px`;
   }
 
   // To remove and event listener, the same options that were send to 'addEventListener' functions must be send. Since 'bind' creates a new function, it's necessary to store the reference to this new function in a variable.
