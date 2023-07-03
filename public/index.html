@@ -4,6 +4,12 @@
     <meta charset="utf-8" />
     <title>Vanilla Context Menu Demo</title>
 
+    <!-- Google Fonts Icons -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+
     <style>
       * {
         box-sizing: border-box;
@@ -52,6 +58,10 @@
   <body>
     <!-- Example one: inside a container wrapper with internal style where the trigger is the parent element. -->
     <section>
+      <p>
+        In this example, the context menu uses internal style tag and SVG icons
+        that doesn't require a library.
+      </p>
       <p>Right click anywhere in this rectangle.</p>
       <vanilla-context-menu>
         <!-- Pass the menu style. -->
@@ -75,8 +85,37 @@
         </template>
         <!-- Pass the options. -->
         <template options>
-          <p>option one</p>
-          <p>option two</p>
+          <p>
+            <!-- Font awesome svg icon -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="1em"
+              viewBox="0 0 512 512"
+            >
+              <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+              <path
+                d="M272 0H396.1c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9V336c0 26.5-21.5 48-48 48H272c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48zM48 128H192v64H64V448H256V416h64v48c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V176c0-26.5 21.5-48 48-48z"
+              />
+            </svg>
+            Copy
+          </p>
+
+          <p>
+            <!-- Bootstrap svg icon -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-trash-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+              />
+            </svg>
+            Delete
+          </p>
         </template>
       </vanilla-context-menu>
     </section>
@@ -103,16 +142,33 @@
 
     <!-- Example three: external stylesheet -->
     <section>
+      <p>
+        In this example, the context menu uses an external stylesheet for
+        styling and Google Fonts icons.
+      </p>
       <p>Right click anywhere in this rectangle.</p>
       <vanilla-context-menu>
         <template style>
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          />
           <link rel="stylesheet" href="./menu-custom-style.css" />
         </template>
         <template options>
-          <p>option one</p>
-          <p>option two</p>
-          <hr>
-          <p>option three</p>
+          <p>
+            <span class="material-symbols-outlined"> grade </span
+            ><span>Favorite</span>
+          </p>
+          <p>
+            <span class="material-symbols-outlined"> download </span>
+            <span>Download</span>
+          </p>
+          <hr />
+          <p>
+            <span class="material-symbols-outlined"> delete </span>
+            Delete
+          </p>
         </template>
       </vanilla-context-menu>
     </section>

@@ -8,6 +8,9 @@
   padding: 5px;
   cursor: pointer;
   margin: 0;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
 }
 
 :host p:hover {
@@ -15,7 +18,7 @@
 }
 
 :host hr {
-  margin:  0;
+  margin: 0;
   height: 1px;
   border: 0;
   background-color: #ddd;
