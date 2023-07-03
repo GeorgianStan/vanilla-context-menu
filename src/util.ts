@@ -25,12 +25,12 @@ export function normalizePosition(
 
   // Compute the normalized position.
   const normalizedX = OUT_OF_BOUNDS_ON_X
-    ? window.innerWidth - targetWidth
+    ? window.innerWidth - targetWidth - 1
     : clientX;
 
   const normalizedY = OUT_OF_BOUNDS_ON_Y
-    ? window.innerHeight - targetHeight
+    ? window.innerHeight - targetHeight - 1
     : clientY;
 
-  return { normalizedX, normalizedY };
+  return { normalizedX: normalizedX, normalizedY };
 }

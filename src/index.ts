@@ -17,6 +17,7 @@ const TOKENS = new Map<TOKEN_KEYS, string>([
 class Menu extends HTMLElement {
   // private properties
   #shadow: ShadowRoot;
+  #styleLoaded = false;
 
   // public properties
   id!: string;
@@ -25,8 +26,45 @@ class Menu extends HTMLElement {
     this.#shadow.append(optionsContent);
   }
 
-  set styleTag(styleContent: Node) {
+  set styleTag(styleContent: Node | undefined) {
+    if (!styleContent) {
+      this.#styleLoaded = true;
+      return;
+    }
+
     this.#shadow.prepend(styleContent);
+
+    // If it's an exeternal link set a flag to true when it's loaded.
+    const externalLinks = Array.from(this.#shadow.querySelectorAll('link'));
+
+    if (!externalLinks.length) {
+      this.#styleLoaded = true;
+      return;
+    }
+
+    let linksLoaded = 0;
+
+    externalLinks.forEach(
+      (link) =>
+        (link.onload = () => {
+          linksLoaded++;
+          linksLoaded === externalLinks.length && (this.#styleLoaded = true);
+        })
+    );
+  }
+
+  /** Promise that uses the `#styleLoaded` flag to check if the external stylesheet was loaded and it resolves when the flag is true. */
+  async waitForStyle() {
+    return new Promise<void>((resolve) => {
+      const checkFlag = () => {
+        if (this.#styleLoaded) {
+          return resolve();
+        }
+
+        setTimeout(checkFlag, 100);
+      };
+      checkFlag();
+    });
   }
 
   // life-cycle methods
@@ -42,6 +80,9 @@ class Menu extends HTMLElement {
   connectedCallback() {
     // Set an unique id on this element.
     this.setAttribute('id', (this.id = crypto.randomUUID()));
+
+    // Add the hidden class that is used to wait for the external style to load.
+    this.classList.add('hidden');
   }
 }
 
@@ -51,7 +92,7 @@ class VanillaContextMenu extends HTMLElement {
   #menuTriggers: HTMLElement[];
 
   // private methods
-  #_onContextMenu(event: MouseEvent) {
+  async #_onContextMenu(event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -76,10 +117,14 @@ class VanillaContextMenu extends HTMLElement {
     ) as Menu;
 
     optionsContent && (this.#menu.options = optionsContent);
-    styleContent && (this.#menu.styleTag = styleContent);
+
+    this.#menu.styleTag = styleContent;
 
     // The menu needs to be added to the DOM so that its position can be normalized according to its size.
     document.body.append(this.#menu);
+
+    await this.#menu.waitForStyle();
+    this.#menu.classList.remove('hidden');
 
     // Compute the position of the menu so that it fits inside the viewport.
     const { clientX, clientY } = event;

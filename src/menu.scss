@@ -6,6 +6,10 @@
     font-family: inherit;
   }
 
+  :host(.hidden) {
+    display: none;
+  }
+
   @keyframes fadein {
     from {
       opacity: 0;
