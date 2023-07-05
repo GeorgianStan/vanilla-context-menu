@@ -135,6 +135,9 @@ class VanillaContextMenu extends HTMLElement {
 
     this.#menu.style.top = `${normalizedY}px`;
     this.#menu.style.left = `${normalizedX}px`;
+
+    // Disable contextmenu event.
+    this.#menu.oncontextmenu = (e) => e.preventDefault();
   }
 
   // To remove and event listener, the same options that were send to 'addEventListener' functions must be send. Since 'bind' creates a new function, it's necessary to store the reference to this new function in a variable.
