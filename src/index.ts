@@ -5,13 +5,15 @@ type TOKEN_KEYS =
   | 'trigger-attr'
   | 'menu-selector'
   | 'options-attr'
-  | 'style-attr';
+  | 'style-attr'
+  | 'option-id';
 
 const TOKENS = new Map<TOKEN_KEYS, string>([
   ['trigger-attr', 'vanilla-context-menu-trigger'], // Attribute selector used for context menu triggers.
   ['menu-selector', 'vanilla-menu'], // HTML tag for the element that will be created when the context menu event is triggered.
   ['options-attr', 'options'], // The attribute selector for the wrapper in which the options are declared.
   ['style-attr', 'style'], // The attribute selector for the wrapper in which the style tag is declared.
+  ['option-id', 'optionId'], // The attribute selector for the wrapper in which the style tag is declared.
 ]);
 
 class Menu extends HTMLElement {
@@ -21,9 +23,18 @@ class Menu extends HTMLElement {
 
   // public properties
   id!: string;
+  parentOwner!: VanillaContextMenu;
 
-  set options(optionsContent: Node) {
-    this.#shadow.append(optionsContent);
+  set options(optionsContent: ChildNode[]) {
+    this.#shadow.append(...optionsContent);
+  }
+
+  /** Return the actual options of the menu by omitting  he <style> element and the nodes that are not of type ELEMENT_NODE(s). */
+  get options(): ChildNode[] {
+    return Array.from(this.#shadow.childNodes).filter(
+      ({ nodeName, nodeType, ELEMENT_NODE }) =>
+        nodeType === ELEMENT_NODE && nodeName !== 'STYLE'
+    );
   }
 
   set styleTag(styleContent: Node | undefined) {
@@ -53,6 +64,37 @@ class Menu extends HTMLElement {
     );
   }
 
+  // private methods
+  #registerClickEvents() {
+    // Get an array of clickable options. The clickable elements are the ones that don't have a listener already registered with 'onclick' and have content.
+    // The options are ELEMENT_NODES, therefore this casting is safe.
+    const clickableOptions = (this.options as HTMLElement[]).filter(
+      (option) => !option.onclick && Boolean(option.innerHTML)
+    );
+
+    // For clickable options register a new 'onclick' handler.
+    clickableOptions.forEach((option, i) => {
+      option.onclick = () => {
+        const clickedOption =
+          option.dataset[TOKENS.get('option-id') as string] ?? i;
+        this.parentOwner.onMenuOptionSelected(clickedOption);
+      };
+    });
+
+    // For the options that already have 'onclick' handler registeerd, then monkey-patch the existing handler.
+    (this.options as HTMLElement[])
+      .filter((option) => option.onclick)
+      .forEach((option) => {
+        const cb = option.onclick as NonNullable<typeof option.onclick>;
+
+        option.onclick = (ev: MouseEvent) => {
+          cb.call(window, ev);
+          this.remove();
+        };
+      });
+  }
+
+  // public methods
   /** Promise that uses the `#styleLoaded` flag to check if the external stylesheet was loaded and it resolves when the flag is true. */
   async waitForStyle() {
     return new Promise<void>((resolve) => {
@@ -83,6 +125,8 @@ class Menu extends HTMLElement {
 
     // Add the hidden class that is used to wait for the external style to load.
     this.classList.add('hidden');
+
+    this.#registerClickEvents();
   }
 }
 
@@ -116,9 +160,11 @@ class VanillaContextMenu extends HTMLElement {
       TOKENS.get('menu-selector') as string
     ) as Menu;
 
-    optionsContent && (this.#menu.options = optionsContent);
+    optionsContent &&
+      (this.#menu.options = Array.from(optionsContent.childNodes));
 
     this.#menu.styleTag = styleContent;
+    this.#menu.parentOwner = this;
 
     // The menu needs to be added to the DOM so that its position can be normalized according to its size.
     document.body.append(this.#menu);
@@ -192,6 +238,16 @@ class VanillaContextMenu extends HTMLElement {
     document.removeEventListener('click', this.#onDocumentClick);
 
     this.#menu && this.#menu.remove();
+  }
+
+  // public methods
+  /** This method is called by the inner menu when an option is selected. */
+  onMenuOptionSelected(optionId: string | number) {
+    (this.#menu as Menu).remove();
+
+    this.dispatchEvent(
+      new CustomEvent('selection-change', { detail: optionId })
+    );
   }
 }
 

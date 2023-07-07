@@ -62,6 +62,7 @@
         In this example, the context menu uses internal style tag and SVG icons
         that doesn't require a library.
       </p>
+      <p>Click event is handled using onclick</p>
       <p>Right click anywhere in this rectangle.</p>
       <vanilla-context-menu>
         <!-- Pass the menu style. -->
@@ -85,7 +86,7 @@
         </template>
         <!-- Pass the options. -->
         <template options>
-          <p>
+          <p onclick="handleCopy()">
             <!-- Font awesome svg icon -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +101,7 @@
             Copy
           </p>
 
-          <p>
+          <p onclick="handleDelete()">
             <!-- Bootstrap svg icon -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -146,8 +147,9 @@
         In this example, the context menu uses an external stylesheet for
         styling and Google Fonts icons.
       </p>
+      <p>Click event is handled interally by the library.</p>
       <p>Right click anywhere in this rectangle.</p>
-      <vanilla-context-menu>
+      <vanilla-context-menu id="menu-with-click">
         <template style>
           <link
             rel="stylesheet"
@@ -156,16 +158,16 @@
           <link rel="stylesheet" href="./menu-custom-style.css" />
         </template>
         <template options>
-          <p>
+          <p data-option-id="favorite">
             <span class="material-symbols-outlined"> grade </span
             ><span>Favorite</span>
           </p>
-          <p>
+          <p data-option-id="download">
             <span class="material-symbols-outlined"> download </span>
             <span>Download</span>
           </p>
           <hr />
-          <p>
+          <p data-option-id="delete">
             <span class="material-symbols-outlined"> delete </span>
             Delete
           </p>
@@ -178,5 +180,19 @@
 
   <script>
     console.log(VanillaContextMenu);
+
+    function handleCopy() {
+      console.log('You clicked on copy.');
+    }
+
+    function handleDelete() {
+      console.log('You clicked on delete.');
+    }
+
+    document
+      .querySelector('#menu-with-click')
+      .addEventListener('selection-change', (e) => {
+        console.log(`You clicked ${e.detail}`);
+      });
   </script>
 </html>
