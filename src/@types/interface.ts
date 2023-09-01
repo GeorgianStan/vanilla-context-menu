@@ -5,6 +5,7 @@ export interface CoreOptions {
 export interface DefaultOptions {
   transitionDuration: number;
   theme: 'black' | 'white';
+  normalizePosition?: boolean;
 }
 
 export interface ConfigurableOptions extends Partial<DefaultOptions> {
@@ -13,7 +14,6 @@ export interface ConfigurableOptions extends Partial<DefaultOptions> {
   customClass?: string;
   customThemeClass?: string;
   preventCloseOnClick?: boolean; // default will be false - global value for all menu items
-  normalizePosition?: boolean;
 }
 
 export interface Options extends ConfigurableOptions, CoreOptions {}
