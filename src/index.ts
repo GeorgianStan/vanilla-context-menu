@@ -216,7 +216,8 @@ class NestedContextMenu extends BaseContextMenu {
     let { normalizedX, normalizedY } = normalizePozition(
       { x: parentX, y: parentY },
       contextMenu,
-      this.options.scope
+      this.options.scope,
+      this.options.normalizePosition
     );
 
     normalizedX = normalizedX + contextMenu.clientWidth;
@@ -305,7 +306,8 @@ export default class VanillaContextMenu extends BaseContextMenu {
     const { normalizedX, normalizedY } = normalizePozition(
       { x: mouseX, y: mouseY },
       contextMenu,
-      this.options.scope
+      this.options.scope,
+      this.options.normalizePosition
     );
 
     contextMenu.style.top = `${normalizedY}px`;

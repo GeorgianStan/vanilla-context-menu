@@ -78,6 +78,7 @@ VanillaContextMenu(configurableOptions: ConfigurableOptions):VanillaContextMenu
 | preventCloseOnClick |    no    |      boolean       |   false   |                          If this variable is `true`, then the context menu will not close when its elements are clicked.                          |
 | transitionDuration  |    no    |       number       |    200    |                        Duration of the context menu transition. Set this value to 0 if you want to disable the animation.                         |
 |        theme        |    no    | 'black' \| 'white' |   black   | By default, the library provides two themes for the context menu: `black` and `white`. You can use this option to choose the one you want to use. |
+|  normalizePosition  |    no    |      boolean       |    true   |  If true, the position of the contextmenu is bound to the scope. Otherwise the left top corner of the contextmenu is bound to the mouse position. |
 
 **MenuItem**
 

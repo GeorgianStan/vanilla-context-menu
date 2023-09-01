@@ -10,9 +10,16 @@ export function normalizePozition(
     y: number;
   },
   target: HTMLElement,
-  scope: HTMLElement
+  scope: HTMLElement,
+  normalized: boolean = true
 ): { normalizedX: number; normalizedY: number } {
   const { x: mouseX, y: mouseY } = mouse;
+
+  if (!normalized) {
+      let normalizedX: number = mouseX;
+      let normalizedY: number = mouseY;
+      return { normalizedX, normalizedY };
+  }
 
   // compute what is the mouse position relative to the container element (scope)
   const { left: scopeOffsetX, top: scopeOffsetY } =
