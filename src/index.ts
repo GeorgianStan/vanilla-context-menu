@@ -35,6 +35,7 @@ class BaseContextMenu {
   #defaultOptions: DefaultOptions = {
     theme: 'black',
     transitionDuration: 200,
+    normalizePosition: true,
   };
 
   // public properties
@@ -158,6 +159,24 @@ class BaseContextMenu {
 
     this.#state.menuItems = this.options.menuItems;
   }
+
+  getNormalizedPosition = (mouseX: number, mouseY: number, contextMenu: HTMLElement): { normalizedX: number; normalizedY: number } => {
+    let normalizedX = mouseX;
+    let normalizedY = mouseY;
+
+    // Check if normalization is required
+    if (this.options.normalizePosition) {
+      const normalizedPosition = normalizePozition(
+        { x: mouseX, y: mouseY },
+        contextMenu,
+        this.options.scope
+      );
+      normalizedX = normalizedPosition.normalizedX;
+      normalizedY = normalizedPosition.normalizedY;
+    }
+
+    return { normalizedX, normalizedY };
+  }
 }
 
 class NestedContextMenu extends BaseContextMenu {
@@ -213,12 +232,7 @@ class NestedContextMenu extends BaseContextMenu {
     const { x: parentX, y: parentY } = parentEl.getBoundingClientRect();
 
     // eslint-disable-next-line prefer-const
-    let { normalizedX, normalizedY } = normalizePozition(
-      { x: parentX, y: parentY },
-      contextMenu,
-      this.options.scope,
-      this.options.normalizePosition
-    );
+    let { normalizedX, normalizedY } = this.getNormalizedPosition(parentX, parentY, contextMenu);
 
     normalizedX = normalizedX + contextMenu.clientWidth;
 
@@ -300,15 +314,11 @@ export default class VanillaContextMenu extends BaseContextMenu {
     const contextMenu: HTMLElement = this.buildContextMenu();
     document.querySelector('body').append(contextMenu);
 
+
     // set the position
     const { clientX: mouseX, clientY: mouseY } = event;
 
-    const { normalizedX, normalizedY } = normalizePozition(
-      { x: mouseX, y: mouseY },
-      contextMenu,
-      this.options.scope,
-      this.options.normalizePosition
-    );
+    const { normalizedX, normalizedY } = this.getNormalizedPosition(mouseX, mouseY, contextMenu);
 
     contextMenu.style.top = `${normalizedY}px`;
     contextMenu.style.left = `${normalizedX}px`;
@@ -344,6 +354,7 @@ export default class VanillaContextMenu extends BaseContextMenu {
     }
     this.#removeExistingContextMenu();
   };
+
 
   constructor(configurableOptions: ConfigurableOptions) {
     super();
