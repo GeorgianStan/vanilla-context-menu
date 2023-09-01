@@ -13,6 +13,7 @@ export interface ConfigurableOptions extends Partial<DefaultOptions> {
   customClass?: string;
   customThemeClass?: string;
   preventCloseOnClick?: boolean; // default will be false - global value for all menu items
+  normalizePosition?: boolean;
 }
 
 export interface Options extends ConfigurableOptions, CoreOptions {}
