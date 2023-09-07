@@ -377,4 +377,11 @@ export default class VanillaContextMenu extends BaseContextMenu {
     document.removeEventListener('click', this.#onDocumentClick);
     this.options.scope.oncontextmenu = null;
   }
+
+  /**
+   * Close the context menu
+   */
+  close(): void {
+    this.#removeExistingContextMenu();
+  }
 }

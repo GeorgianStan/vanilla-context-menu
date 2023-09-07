@@ -109,7 +109,7 @@ export interface BaseMenuOption {
 }
 ```
 
-## API <sub style='font-size:15px'>(2)</sub>
+## API <sub style='font-size:15px'>(3)</sub>
 
 The following methods and properties are available through the class instance.
 
@@ -132,6 +132,14 @@ This method will remove all event listeners that have been registered for the co
 ```ts
 updateOptions(configurableOptions: Partial<ConfigurableOptions>): void
 ```
+
+(3)
+
+```ts
+close(): void
+```
+
+This method closes the context-menu.
 
 ## Examples
 
